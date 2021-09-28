@@ -19,3 +19,6 @@ target_link_libraries(c++_basic_usage c++_example_dependencies)
 
 add_executable(c++_hypercall hypercall.cpp)
 target_link_libraries(c++_hypercall c++_example_dependencies)
+
+add_executable(c++_cpuid cpuid.cpp cpuid.h)
+target_link_libraries(c++_cpuid c++_example_dependencies)
