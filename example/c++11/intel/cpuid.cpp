@@ -5,60 +5,41 @@
 // PAL can also pretty-print things for you through any printf-like function:
 #include <stdio.h>
 
+
+#define CONCAT(prefix, id, reg)  prefix ## id ## reg
+
+#define PRINT_CPUID_LEAF(X) ({     \
+      CONCAT(leaf_, X, _eax)::print(printf); \
+      CONCAT(leaf_, X, _ebx)::print(printf); \
+      CONCAT(leaf_, X, _ecx)::print(printf); \
+      CONCAT(leaf_, X, _edx)::print(printf); \
+      })
+
+#define PRINT_CPUID_LEAF_INDEXED(X) ({     \
+      CONCAT(leaf_, X, _eax)::print(printf, 0); \
+      CONCAT(leaf_, X, _ebx)::print(printf, 1); \
+      CONCAT(leaf_, X, _ecx)::print(printf, 2); \
+      CONCAT(leaf_, X, _edx)::print(printf, 3); \
+      })
+
+
 int main()
 {
     // For C++11 everything in PAL is contained in the "pal" namespace
     using namespace pal;
 
-    leaf_01_eax::print(printf);
-    leaf_01_ebx::print(printf);
-    leaf_01_ecx::print(printf);
-    leaf_01_edx::print(printf);
+    PRINT_CPUID_LEAF(01);
+    PRINT_CPUID_LEAF(02);
+    PRINT_CPUID_LEAF(03);
+    PRINT_CPUID_LEAF_INDEXED(04);
 
-    leaf_02_eax::print(printf);
-    leaf_02_ebx::print(printf);
-    leaf_02_ecx::print(printf);
-    leaf_02_edx::print(printf);
+    PRINT_CPUID_LEAF(05);
+    PRINT_CPUID_LEAF(06);
+    PRINT_CPUID_LEAF_INDEXED(07);
 
-    leaf_03_eax::print(printf);
-    leaf_03_ebx::print(printf);
-    leaf_03_ecx::print(printf);
-    leaf_03_edx::print(printf);
-
-    leaf_04_eax::print(printf, 0);
-    leaf_04_ebx::print(printf, 1);
-    leaf_04_ecx::print(printf, 2);
-    leaf_04_edx::print(printf, 3);
-
-    leaf_05_eax::print(printf);
-    leaf_05_ebx::print(printf);
-    leaf_05_ecx::print(printf);
-    leaf_05_edx::print(printf);
-
-    leaf_06_eax::print(printf);
-    leaf_06_ebx::print(printf);
-    leaf_06_ecx::print(printf);
-    leaf_06_edx::print(printf);
-
-    leaf_07_eax::print(printf, 0);
-    leaf_07_ebx::print(printf, 1);
-    leaf_07_ecx::print(printf, 2);
-    leaf_07_edx::print(printf, 3);
-
-    leaf_09_eax::print(printf);
-    leaf_09_ebx::print(printf);
-    leaf_09_ecx::print(printf);
-    leaf_09_edx::print(printf);
-
-    leaf_0a_eax::print(printf);
-    leaf_0a_ebx::print(printf);
-    leaf_0a_ecx::print(printf);
-    leaf_0a_edx::print(printf);
-
-    leaf_0b_eax::print(printf);
-    leaf_0b_ebx::print(printf);
-    leaf_0b_ecx::print(printf);
-    leaf_0b_edx::print(printf);
+    PRINT_CPUID_LEAF(09);
+    PRINT_CPUID_LEAF(0a);
+    PRINT_CPUID_LEAF(0b);
 
     leaf_0d_eax::subleaf_0::print(printf, 0);
     leaf_0d_ebx::subleaf_0::print(printf, 1);
@@ -130,15 +111,8 @@ int main()
     leaf_14_ecx::subleaf_1::print(printf, 2);
     leaf_14_edx::subleaf_1::print(printf, 3);
 
-    leaf_15_eax::print(printf);
-    leaf_15_ebx::print(printf);
-    leaf_15_ecx::print(printf);
-    leaf_15_edx::print(printf);
-
-    leaf_16_eax::print(printf);
-    leaf_16_ebx::print(printf);
-    leaf_16_ecx::print(printf);
-    leaf_16_edx::print(printf);
+    PRINT_CPUID_LEAF(15);
+    PRINT_CPUID_LEAF(16);
 
     leaf_17_eax::subleaf_0::print(printf, 0);
     leaf_17_ebx::subleaf_0::print(printf, 1);
@@ -165,53 +139,14 @@ int main()
     leaf_18_ecx::subleaf_n::print(printf, 2);
     leaf_18_edx::subleaf_n::print(printf, 3);
 
-    leaf_1a_eax::print(printf);
-    leaf_1a_ebx::print(printf);
-    leaf_1a_ecx::print(printf);
-    leaf_1a_edx::print(printf);
-
-    leaf_1f_eax::print(printf);
-    leaf_1f_ebx::print(printf);
-    leaf_1f_ecx::print(printf);
-    leaf_1f_edx::print(printf);
-
-    leaf_80000000_eax::print(printf);
-    leaf_80000000_ebx::print(printf);
-    leaf_80000000_ecx::print(printf);
-    leaf_80000000_edx::print(printf);
-
-    leaf_80000001_eax::print(printf);
-    leaf_80000001_ebx::print(printf);
-    leaf_80000001_ecx::print(printf);
-    leaf_80000001_edx::print(printf);
-
-    leaf_80000002_eax::print(printf);
-    leaf_80000002_ebx::print(printf);
-    leaf_80000002_ecx::print(printf);
-    leaf_80000002_edx::print(printf);
-
-    leaf_80000003_eax::print(printf);
-    leaf_80000003_ebx::print(printf);
-    leaf_80000003_ecx::print(printf);
-    leaf_80000003_edx::print(printf);
-
-    leaf_80000004_eax::print(printf);
-    leaf_80000004_ebx::print(printf);
-    leaf_80000004_ecx::print(printf);
-    leaf_80000004_edx::print(printf);
-
-    leaf_80000006_eax::print(printf);
-    leaf_80000006_ebx::print(printf);
-    leaf_80000006_ecx::print(printf);
-    leaf_80000006_edx::print(printf);
-
-    leaf_80000007_eax::print(printf);
-    leaf_80000007_ebx::print(printf);
-    leaf_80000007_ecx::print(printf);
-    leaf_80000007_edx::print(printf);
-
-    leaf_80000008_eax::print(printf);
-    leaf_80000008_ebx::print(printf);
-    leaf_80000008_ecx::print(printf);
-    leaf_80000008_edx::print(printf);
+    PRINT_CPUID_LEAF(1a);
+    PRINT_CPUID_LEAF(1f);
+    PRINT_CPUID_LEAF(80000000);
+    PRINT_CPUID_LEAF(80000001);
+    PRINT_CPUID_LEAF(80000002);
+    PRINT_CPUID_LEAF(80000003);
+    PRINT_CPUID_LEAF(80000004);
+    PRINT_CPUID_LEAF(80000006);
+    PRINT_CPUID_LEAF(80000007);
+    PRINT_CPUID_LEAF(80000008);
 }
